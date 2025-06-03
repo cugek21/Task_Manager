@@ -1,5 +1,5 @@
 """
-zadani_1.py: čtvrtý projekt do Engeto Tester s Pythonem
+main.py: čtvrtý projekt do Engeto Tester s Pythonem
 
 author: Radek Jíša
 email: radek.jisa@gmail.com
