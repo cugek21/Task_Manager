@@ -13,7 +13,7 @@ from mysql.connector import MySQLConnection
 DB_CONFIG = {
     'host': 'localhost', #FILL IN
     'user': 'root',
-    'password': 'fahgaq3byp',
+    'password': '1111',
     'database': 'db_01'
     }
 
