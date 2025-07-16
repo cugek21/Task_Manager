@@ -13,7 +13,7 @@ from src.main import get_db_cursor, add_task, update_task, delete_task
 TEST_DB_CONFIG = {
     'host': 'localhost', #FILL IN
     'user': 'root',
-    'password': 'fahgaq3byp',
+    'password': '1111',
     'database': 'test_db_01'
     }
 
