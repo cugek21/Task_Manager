@@ -1,21 +1,41 @@
 """
-main.py: Project 5 - Tester with Python
+Task Manager CLI Application
 
-author: Radek Jíša
-email: radek.jisa@gmail.com
+This module provides a command-line interface for managing tasks
+using a MySQL database backend.
+It allows users to add, display, update, and delete tasks,
+with all data stored persistently in a database.
+
+Features:
+    - Add new tasks with a name and description
+    - Display all tasks, with optional filtering by status
+    - Update the status of existing tasks
+    - Delete tasks by ID
+
+Database credentials are loaded from environment variables using a .env file.
+All database operations use parameterized queries for security.
+
+Author: Radek Jíša
+Email: radek.jisa@gmail.com
 """
 
-import sys
+
+import os
 from contextlib import contextmanager
+
+from dotenv import load_dotenv
 import mysql.connector
 from mysql.connector import MySQLConnection
 
+
+load_dotenv()
 DB_CONFIG = {
-    'host': 'localhost', #FILL IN
-    'user': 'root',
-    'password': '1111',
-    'database': 'db_01'
-    }
+    'host': os.getenv('DB_HOST'),
+    'user': os.getenv('DB_USER'),
+    'password': os.getenv('DB_PASS'),
+    'database': os.getenv('DB_NAME')
+}
+
 
 def check_python_version(required=(3, 10)):
     """
@@ -27,12 +47,13 @@ def check_python_version(required=(3, 10)):
     Raises:
         RuntimeError: If current version os lower than required.    
     """
-    current = sys.version_info
+    current = os.sys.version_info
     if current[:2] < required:
         raise RuntimeError(
         f'Requires Python {required[0]}.{required[1]}+, '
         f'but found {current.major}.{current.minor}'
         )
+
 
 def connect_db() -> MySQLConnection | None:
     """
@@ -48,6 +69,7 @@ def connect_db() -> MySQLConnection | None:
     except Exception as e:
         print(f'Failed to connect: {e}')
         return None
+
 
 @contextmanager
 def get_db_cursor():
@@ -70,6 +92,7 @@ def get_db_cursor():
     finally:
         cursor.close()
         conn.close()
+
 
 def create_table() -> None:
     """
@@ -99,6 +122,7 @@ def create_table() -> None:
         except Exception as e:
             print(f'Error while creating table: {e}')
 
+
 def menu(menu_text: str, max_option: int) -> int:
     """
     Displays the given menu text and returns a user choice.
@@ -117,6 +141,7 @@ def menu(menu_text: str, max_option: int) -> int:
         if choice.isdigit() and int(choice) in range(1, max_option + 1):
             return int(choice)
         print(f'Invalid choice. Enter a number between 1 and {max_option}.')
+
 
 def add_task() -> None:
     """
@@ -153,6 +178,7 @@ def add_task() -> None:
         except Exception as e:
             print(f'Error while adding task: {e}')
 
+
 def print_tasks(rows: list[tuple]) -> None:
     """
     Prints tasks in the console.
@@ -170,6 +196,7 @@ def print_tasks(rows: list[tuple]) -> None:
             Created: {date}
             {'_' * 60}
         ''')
+
 
 def get_tasks(cursor) -> list[tuple] | None:
     """
@@ -189,6 +216,7 @@ def get_tasks(cursor) -> list[tuple] | None:
         return
     return tasks
 
+
 def display_tasks() -> None:
     """
     Displays all tasks with optional filtering by status.
@@ -203,7 +231,6 @@ def display_tasks() -> None:
         '3. In Progress\n'
         '4. Continue without filter\n'
     )
-
     with get_db_cursor() as cursor_data:
         if cursor_data is None:
             return
@@ -217,7 +244,6 @@ def display_tasks() -> None:
             print_tasks(tasks)
 
             choice = menu(filter_menu_text, 4)
-
             if choice == 1:
                 status = 'Not Started'
             elif choice == 2:
@@ -234,9 +260,9 @@ def display_tasks() -> None:
                 return
             print(f'Tasks with status "{status}":')
             print_tasks(filtered_tasks)
-
         except Exception as e:
             print(f'Error while displaying tasks: {e}')
+
 
 def update_task():
     """
@@ -271,12 +297,14 @@ def update_task():
                     continue
                 cursor.execute(
                     "UPDATE tasks SET Status = %s WHERE ID = %s", 
-                    (new_status, int(selected_id)))
+                    (new_status, int(selected_id))
+                    )
                 conn.commit()
                 print(f'Task ID {selected_id} was successfully updated.')
                 break
         except Exception as e:
             print(f'Error while updating: {e}')
+
 
 def delete_task() -> None:
     """
@@ -314,6 +342,7 @@ def delete_task() -> None:
         except Exception as e:
             print(f'Error while deleting: {e}')
 
+
 def main() -> None:
     """
     Main loop of the program. Displays the main menu
@@ -330,7 +359,6 @@ def main() -> None:
         '4. Delete Task\n'
         '5. Exit Program\n'
     )
-
     while True:
         choice = menu(main_menu_text, 5)
         if choice == 1:
@@ -344,6 +372,7 @@ def main() -> None:
         else:
             print('Exiting program...')
             break
+
 
 if __name__ == '__main__':
     check_python_version((3,10))
