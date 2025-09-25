@@ -1,13 +1,8 @@
 """
 Unit tests for updating tasks in the Task Manager application.
-
 These tests verify updating task status, handling invalid input,
 and output messages.
-
-Author: Radek Jíša
-Email: radek.jisa@gmail.com
 """
-
 
 import pytest
 
@@ -31,7 +26,8 @@ def test_update_task_positive(
     expected: str
 ) -> None:
     """
-    Tests successful update of task status with different casing and spacing.
+    Tests successful update of task status with different casing
+    and spacing.
 
     Args:
         monkeypatch: Pytest fixture to simulate user input.
@@ -120,10 +116,12 @@ def test_update_task_output(
     expected: str
 ) -> None:
     """
-    Tests output messages during status update, both errors and success.
+    Tests output messages during status update, both errors
+    and success.
 
     Args:
-        monkeypatch: Pytest fixture to simulate user input and capture print.
+        monkeypatch:
+            Pytest fixture to simulate user input and capture print.
         id_ (str): Task ID input.
         status (str): Status input.
         expected (str): Expected output message.
@@ -146,7 +144,8 @@ def test_update_task_empty(monkeypatch: pytest.MonkeyPatch) -> None:
     Tests update when there are no tasks in the database.
 
     Args:
-        monkeypatch: Pytest fixture to simulate user input and capture output.
+        monkeypatch:
+            Pytest fixture to simulate user input and capture output.
 
     Returns:
         None

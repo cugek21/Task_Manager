@@ -69,5 +69,4 @@ Tests use a separate test database (`test_db_01`) and reset the table before eac
 
 ## Author
 
-Radek Jíša  
-radek.jisa@gmail.com
+Radek Jíša

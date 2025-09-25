@@ -1,12 +1,8 @@
 """
-    Unit tests for deleting tasks in the Task Manager application.
-
-    These tests verify correct deletion, error handling, and output messages.
-
-    Author: Radek Jíša
-    Email: radek.jisa@gmail.com
+Unit tests for deleting tasks in the Task Manager application.
+These tests verify correct deletion, error handling,
+and output messages.
 """
-
 
 import pytest
 
@@ -63,7 +59,8 @@ def test_delete_task_output(
     and valid cases.
 
     Args:
-        monkeypatch: Pytest fixture to simulate user input and capture print.
+        monkeypatch:
+            Pytest fixture to simulate user input and capture print.
         id_ (str): Task ID input.
         expected (str): Expected output message.
 

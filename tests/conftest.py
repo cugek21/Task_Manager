@@ -1,10 +1,6 @@
 """
 Shared fixtures and test DB setup for Task Manager tests.
-
-Author: Radek Jíša
-Email: radek.jisa@gmail.com
 """
-
 
 import os
 
@@ -12,7 +8,6 @@ from dotenv import load_dotenv
 import mysql.connector
 from mysql.connector import MySQLConnection
 import pytest
-
 
 load_dotenv()
 TEST_DB_CONFIG = {

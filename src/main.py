@@ -6,19 +6,10 @@ using a MySQL database backend.
 It allows users to add, display, update, and delete tasks,
 with all data stored persistently in a database.
 
-Features:
-    - Add new tasks with a name and description
-    - Display all tasks, with optional filtering by status
-    - Update the status of existing tasks
-    - Delete tasks by ID
-
-Database credentials are loaded from environment variables using a .env file.
-All database operations use parameterized queries for security.
-
-Author: Radek Jíša
-Email: radek.jisa@gmail.com
+Database credentials are loaded from environment variables
+using .env file. All database operations use parameterized
+queries for security.
 """
-
 
 import os
 from contextlib import contextmanager
@@ -26,7 +17,6 @@ from contextlib import contextmanager
 from dotenv import load_dotenv
 import mysql.connector
 from mysql.connector import MySQLConnection
-
 
 load_dotenv()
 DB_CONFIG = {
@@ -164,8 +154,9 @@ def add_task() -> None:
                     ).strip().capitalize()
                 if 0 < len(name) <= 50 and 0 < len(description) <= 500:
                     cursor.execute(
-                        "INSERT INTO tasks (Name, Description) VALUES (%s, %s)",
-                        (name, description)
+                        "INSERT INTO tasks (Name, Description) "
+                        "VALUES (%s, %s)",
+                        (name, description),
                     )
                     conn.commit()
                     print(f'Task "{name}" added successfully.')
@@ -285,7 +276,9 @@ def update_task():
 
             existing_ids = {str(task[0]) for task in tasks}
             while True:
-                selected_id = input('Enter ID of the task to update: ').strip()
+                selected_id = input(
+                    'Enter ID of the task to update: '
+                ).strip()
                 if selected_id not in existing_ids:
                     print('ID not found.')
                     continue

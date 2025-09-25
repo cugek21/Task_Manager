@@ -1,13 +1,9 @@
 """
 Unit tests for adding tasks in the Task Manager application.
 
-These tests verify input validation, correct insertion, and output messages
-when adding tasks to the database.
-
-Author: Radek Jíša
-Email: radek.jisa@gmail.com
+These tests verify input validation, correct insertion, and output
+messages when adding tasks to the database.
 """
-
 
 import pytest
 
@@ -75,7 +71,7 @@ def test_add_task_positive(
     expected: list[tuple]
 ) -> None:
     """
-    Tests that valid inputs are correctly inserted into the tasks table.
+    Tests that valid inputs are correctly inserted into tasks table.
 
     Args:
         monkeypatch: Pytest fixture to simulate user input.
@@ -117,7 +113,8 @@ def test_add_task_output(
     Tests the printed output after adding a task.
 
     Args:
-        monkeypatch: Pytest fixture to simulate user input and capture output.
+        monkeypatch:
+            Pytest fixture to simulate user input and capture output.
         test_name (str): Task name to simulate.
         test_description (str): Task description to simulate.
         expected (str): Expected printed message.
